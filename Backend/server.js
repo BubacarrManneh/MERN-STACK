@@ -12,7 +12,8 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 
-app.use('/api/user', require('./Routers/router'))
+app.use('/api/user', require('./Routers/userRouter'))
+app.use('/api/blog', require('./Routers/blogRouter'))
 app.use(errorHandler)
 
 app.listen( port , () => console.log(`Server is running on ${port}`))
