@@ -6,8 +6,9 @@ const {
   putBlog,
   deleteBlog,
 } = require("../Controllers/blogController");
+const { authenticate } = require("../Middlewares/authMiddleware");
 
-router.route("/").get(getBlog).post(postBlog);
-router.route("/:id").put(putBlog).delete(deleteBlog);
+router.route("/").get(authenticate, getBlog).post(authenticate, postBlog);
+router.route("/:id").put(authenticate, putBlog).delete(authenticate, deleteBlog);
 
 module.exports = router;
