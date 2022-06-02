@@ -1,10 +1,11 @@
-{
+{  
   "name": "mearn-project",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "start": " node backend/server.js",
-    "watch": " nodemon backend/server.js"
+    "watch": " nodemon backend/server.js",
+    "client": "yarn --cwd Frontend start"
   },
   "author": "Bubacarr M MAnneh",
   "license": "MIT",
