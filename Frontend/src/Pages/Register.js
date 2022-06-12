@@ -8,7 +8,8 @@ import Spinner from "../Components/Spinner";
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     password2: "",

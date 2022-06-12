@@ -1,58 +1,97 @@
-// import { useState, useEffect} from 'react'
-import { FaSignInAlt } from 'react-icons/fa'
+import { useState, useEffect } from "react";
+import { FaSignInAlt } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login, reset } from "../features/Auth/AuthSlice";
+import Spinner from "../Components/Spinner";
 
-const Login = () => {
-  // const [userData, setUserData ] = useState({
-  //   email: '',
-  //   password : ''
-  // })
+function Login() {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
 
-  // const { email, password } = userData;
+  const { email, password } = userData;
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-  }
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
-    // setUserData((prevState) => ({
-    //   ...prevState,
-    //   [e.target.name]: e.target.value,
-    // }));
+    setUserData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    
+    const userLogin = {
+      email,
+      password,
+    };
+
+    dispatch(login(userLogin));
+  };
+
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (
     <>
       <section className="heading">
         <h1>
-          <FaSignInAlt /> Sign In
+          <FaSignInAlt /> Login
         </h1>
         <p>Login to post a blog</p>
       </section>
+
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
             <input
               type="email"
-              className="form-control:email"
-              name="email"
-              placeholder="Email"
+              className="form-control"
               id="email"
+              name="email"
+              value={email}
+              placeholder="Enter your email"
               onChange={onChange}
             />
           </div>
           <div className="form-group">
             <input
               type="password"
-              className="form-control:email"
-              name="email"
-              placeholder="Password"
+              className="form-control"
               id="password"
+              name="password"
+              value={password}
+              placeholder="Enter password"
               onChange={onChange}
             />
           </div>
+
           <div className="form-group">
-            <button className="btn btn-block" type="submit">
-              Sign in
+            <button type="submit" className="btn btn-block">
+              Submit
             </button>
           </div>
         </form>
@@ -61,4 +100,4 @@ const Login = () => {
   );
 }
 
-export default Login
+export default Login;

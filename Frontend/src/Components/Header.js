@@ -1,28 +1,60 @@
-import { FaSignInAlt, FaUser, FaBlog } from "react-icons/fa";
-import { Link } from "react-router-dom";
+// import { useEffect } from "react";
+import { FaSignInAlt, FaUser, FaBlog, FaSignOutAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { reset, logout} from '../features/Auth/AuthSlice'
 
 function Header() {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  
+  const { user } = useSelector((state) => {
+    return state.auth
+  })
+
+  const onLogout = () => {
+    dispatch(logout());
+    dispatch(reset());
+    navigate("/");
+  }
+
   return (
     <header className="header">
-      {/* App logo */}
       <div className="logo">
-        <Link to="/">
-          <FaBlog />
-          Blogs
-        </Link>
+        <>
+          {user ? "" : <p className="author">Bubacarr</p>}
+          <Link to="/">
+            <FaBlog />
+            Blogs
+          </Link>
+        </>
       </div>
-      {/* End of App logo */}
       <ul>
-        <li>
-          <Link to="/login">
-            <FaSignInAlt /> Login
-          </Link>
-        </li>
-        <li>
-          <Link to="/register">
-            <FaUser /> Register
-          </Link>
-        </li>
+        {user ? (
+          <>
+            <p className="user">Welcome: {user.firstName}</p>
+            <li>
+              <button className="btn" onClick={onLogout}>
+                <FaSignOutAlt /> LogOut
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <header></header>
+            <li>
+              <Link to="/login">
+                <FaSignInAlt /> Login
+              </Link>
+            </li>
+            <li>
+              <Link to="/register">
+                <FaUser /> Register
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </header>
   );
