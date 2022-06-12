@@ -1,23 +1,23 @@
-import { useState, useEffect} from 'react'
+// import { useState, useEffect} from 'react'
 import { FaSignInAlt } from 'react-icons/fa'
 
 const Login = () => {
-  const [userData, setUserData ] = useState({
-    email: '',
-    password : ''
-  })
+  // const [userData, setUserData ] = useState({
+  //   email: '',
+  //   password : ''
+  // })
 
-  const { email, password } = userData;
+  // const { email, password } = userData;
 
-  const onSubmit = (e: { preventDefault: () => void; }) => {
+  const onSubmit = (e) => {
     e.preventDefault()
   }
 
-  const onChange = (e: { target: { name: any; value: any; }; }) => {
-    setUserData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+  const onChange = (e) => {
+    // setUserData((prevState) => ({
+    //   ...prevState,
+    //   [e.target.name]: e.target.value,
+    // }));
   }
 
   return (
