@@ -33,7 +33,7 @@ function Header() {
       <ul>
         {user ? (
           <>
-            <p className="user">Welcome: {user.firstName}</p>
+            <p className="user">{user.firstName +' '+ user.lastName}</p>
             <li>
               <button className="btn" onClick={onLogout}>
                 <FaSignOutAlt /> LogOut
